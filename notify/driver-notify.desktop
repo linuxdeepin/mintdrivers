@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Driver Notifier
+Exec=/usr/lib/linuxmint/mintDrivers/driver-notifier.py
+NoDisplay=true
+OnlyShowIn=Deepin
+X-GNOME-Autostart-Delay=30

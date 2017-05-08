@@ -1,0 +1,4 @@
+usr
+notify/driver-notifier.py  /usr/lib/linuxmint/mintDrivers/
+#notify/driver-notify.desktop  /etc/xdg/autostart/
+po/mo/*  /usr/share/locale
