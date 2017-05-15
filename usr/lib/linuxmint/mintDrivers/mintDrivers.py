@@ -238,6 +238,7 @@ class Application():
         installs.append(pkg.shortname)
         if pkg.shortname == "bumblebee-nvidia":
             installs.append("nvidia-driver")
+            installs.append("primus-libs:i386")
         print ("Install %s" % pkg.shortname)
         try:
           for recommend in pkg.candidate.recommends:
