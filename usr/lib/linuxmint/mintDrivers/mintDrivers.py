@@ -219,26 +219,40 @@ class Application():
 
     for pkg in self.driver_changes:
       if pkg.is_installed:
-        if pkg.shortname == "bumblebee-nvidia":
-            removals.append("nvidia-driver")
-            removals.append("glx-alternative-nvidia")
-            removals.append("xserver-xorg-video-nvidia")
         if pkg.shortname == "nvidia-driver":
             removals.append("glx-alternative-nvidia")
             removals.append("xserver-xorg-video-nvidia")
+            if self.bbswitch_enabled():
+                removals.append("bumblebee-nvidia")
+                removals.append("primus-libs:i386")
         if pkg.shortname == "nvidia-legacy-304xx-driver":
             removals.append("glx-alternative-nvidia")
             removals.append("xserver-xorg-video-nvidia-legacy-304xx")
+            if self.bbswitch_enabled():
+                removals.append("bumblebee-nvidia")
+                removals.append("primus-libs:i386")
         if pkg.shortname == ("nvidia-legacy-340xx-driver"):
             removals.append("glx-alternative-nvidia")
             removals.append("xserver-xorg-video-nvidia-legacy-340xx")
+            if self.bbswitch_enabled():
+                removals.append("bumblebee-nvidia")
+                removals.append("primus-libs:i386")
         removals.append(pkg.shortname)
         print ("Remove %s" % pkg.shortname)
       else:
         installs.append(pkg.shortname)
-        if pkg.shortname == "bumblebee-nvidia":
-            installs.append("nvidia-driver")
-            installs.append("primus-libs:i386")
+        if pkg.shortname == "nvidia-driver":
+            if self.bbswitch_enabled():
+                installs.append("primus-libs:i386")
+                installs.append("bumblebee-nvidia")
+        if pkg.shortname == "nvidia-legacy-304xx-driver":
+            if self.bbswitch_enabled():
+                installs.append("primus-libs:i386")
+                installs.append("bumblebee-nvidia")
+        if pkg.shortname == "nvidia-legacy-340xx-driver":
+            if self.bbswitch_enabled():
+                installs.append("primus-libs:i386")
+                installs.append("bumblebee-nvidia")
         print ("Install %s" % pkg.shortname)
         try:
           for recommend in pkg.candidate.recommends:
@@ -478,18 +492,6 @@ class Application():
   def show_drivers(self):
     self.apt_cache = apt.Cache()
     self.devices = detect.system_device_drivers()
-    nvidia_device = ''
-    if self.bbswitch_enabled():
-        for device in self.devices:
-            for _driver in self.devices[device]['drivers']:
-                print(_driver)
-                if _driver == 'nvidia-driver':
-                    nvidia_device = device
-                    print("nvdia_device here %s" % device)
-        if not len(nvidia_device) == 0:
-            del self.devices[nvidia_device]
-            self.devices['bumblebee_device'] = {'vendor': 'Optimus Notebook', 'drivers': {'bumblebee-nvidia': {'free': False, 'from_distro': False}}}
-            print("bumblebee added")
     self.driver_changes = []
     self.orig_selection = {}
     # HACK: the case where the selection is actually "Do not use"; is a little
