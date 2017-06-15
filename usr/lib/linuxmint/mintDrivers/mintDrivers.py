@@ -222,18 +222,21 @@ class Application():
         if pkg.shortname == "nvidia-driver":
             removals.append("glx-alternative-nvidia")
             removals.append("xserver-xorg-video-nvidia")
+            removals.append("nvidia-persistenced")
             if self.bbswitch_enabled():
                 removals.append("bumblebee-nvidia")
                 removals.append("primus-libs:i386")
         if pkg.shortname == "nvidia-legacy-304xx-driver":
             removals.append("glx-alternative-nvidia")
             removals.append("xserver-xorg-video-nvidia-legacy-304xx")
+            removals.append("nvidia-persistenced")
             if self.bbswitch_enabled():
                 removals.append("bumblebee-nvidia")
                 removals.append("primus-libs:i386")
         if pkg.shortname == ("nvidia-legacy-340xx-driver"):
             removals.append("glx-alternative-nvidia")
             removals.append("xserver-xorg-video-nvidia-legacy-340xx")
+            removals.append("nvidia-persistenced")
             if self.bbswitch_enabled():
                 removals.append("bumblebee-nvidia")
                 removals.append("primus-libs:i386")
